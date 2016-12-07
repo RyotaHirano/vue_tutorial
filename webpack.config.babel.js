@@ -61,12 +61,12 @@ module.exports = {
     presets: ['es2015'],
     plugins: ['transform-runtime']
   },
-  vue: {
-    loaders: {
-      html: 'pug',
-      css: 'style!css!postcss',
-    }
-  },
+  // vue: {
+  //   loaders: {
+  //     html: 'pug',
+  //     css: 'style!css!postcss',
+  //   }
+  // },
   postcss: [
     require('postcss-partial-import')(),
     require('precss')(),
