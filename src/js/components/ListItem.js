@@ -1,15 +1,8 @@
 import Vue from 'vue';
 
 Vue.component('list-item', {
-  data() {
-    return {
-      memo: {
-        id: 1,
-        text: 'テスト',
-        date: '16-10-28',
-        tags: ['タグ1', 'タグ2']
-      }
-    }
+  props: {
+    memo: Object
   },
   template: `
     <div class="list-item">
