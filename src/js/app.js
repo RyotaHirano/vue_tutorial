@@ -13,7 +13,7 @@ new Vue({
   template: `
     <div>
       <editor-view @add="add"></editor-view>
-      <list-view :memos="memos"></list-view>
+      <list-view @remove="remove" :memos="memos"></list-view>
     </div>
   `,
   computed: {
@@ -27,6 +27,13 @@ new Vue({
     add(newMemo) {
       newMemo.id = this.nextId
       this.memos.push(newMemo)
+    },
+    remove(id) {
+      this.memos.forEach((memo, i) => {
+        if(memo.id === id) {
+          this.memos.splice(i, 1)
+        }
+      });
     }
   }
 })

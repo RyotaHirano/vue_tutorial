@@ -24,6 +24,14 @@ Vue.component('list-item', {
           <span v-for="tag in memo.tags">{{tag}}</span>
         </span>
       </div>
+      <div>
+        <button @click="remove(memo.id)">削除</button>
+      </div>
     </div>
-  `
+  `,
+  methods: {
+    remove(id) {
+      this.$parent.$emit('remove', id)
+    }
+  }
 });

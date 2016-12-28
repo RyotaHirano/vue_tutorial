@@ -63,7 +63,7 @@
 /******/ 	}
 
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "3b78e2e84cf385b163a3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3567d9124244a9dcfedf"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 
@@ -609,7 +609,7 @@
 	    };
 	  },
 
-	  template: '\n    <div>\n      <editor-view @add="add"></editor-view>\n      <list-view :memos="memos"></list-view>\n    </div>\n  ',
+	  template: '\n    <div>\n      <editor-view @add="add"></editor-view>\n      <list-view @remove="remove" :memos="memos"></list-view>\n    </div>\n  ',
 	  computed: {
 	    nextId: function nextId() {
 	      return this.memos.reduce(function (id, memo) {
@@ -621,6 +621,15 @@
 	    add: function add(newMemo) {
 	      newMemo.id = this.nextId;
 	      this.memos.push(newMemo);
+	    },
+	    remove: function remove(id) {
+	      var _this = this;
+
+	      this.memos.forEach(function (memo, i) {
+	        if (memo.id === id) {
+	          _this.memos.splice(i, 1);
+	        }
+	      });
 	    }
 	  }
 	});
@@ -9444,7 +9453,12 @@
 	  props: {
 	    memo: Object
 	  },
-	  template: '\n    <div class="list-item">\n      <div>\n        <span>ID</span>\n        <span>{{memo.id}}</span>\n      </div>\n      <div>\n        <span>text</span>\uFF1A\n        <span>{{memo.text}}</span>\n      </div>\n      <div>\n        <span>date</span>\uFF1A\n        <span>{{memo.date}}</span>\n      </div>\n      <div>\n        <span>tags</span>\uFF1A\n        <span>\n          <span v-for="tag in memo.tags">{{tag}}</span>\n        </span>\n      </div>\n    </div>\n  '
+	  template: '\n    <div class="list-item">\n      <div>\n        <span>ID</span>\n        <span>{{memo.id}}</span>\n      </div>\n      <div>\n        <span>text</span>\uFF1A\n        <span>{{memo.text}}</span>\n      </div>\n      <div>\n        <span>date</span>\uFF1A\n        <span>{{memo.date}}</span>\n      </div>\n      <div>\n        <span>tags</span>\uFF1A\n        <span>\n          <span v-for="tag in memo.tags">{{tag}}</span>\n        </span>\n      </div>\n      <div>\n        <button @click="remove(memo.id)">\u524A\u9664</button>\n      </div>\n    </div>\n  ',
+	  methods: {
+	    remove: function remove(id) {
+	      this.$parent.$emit('remove', id);
+	    }
+	  }
 	});
 
 /***/ },
