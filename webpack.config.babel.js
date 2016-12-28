@@ -8,7 +8,7 @@ module.exports = {
   entry: './src/js/app.js',
   output: {
     path: 'docs',
-    publicPath: '/',  // Webpackのプラグインが利用するもの
+    publicPath: '',  // Webpackのプラグインが利用するもの
     filename: 'assets/js/[name].js'
   },
   externals: {
