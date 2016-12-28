@@ -5,7 +5,7 @@ import { resolve } from 'path';
 const rootResolve = pathname => resolve(__dirname, pathname);
 
 module.exports = {
-  entry: './src/js/main.js',
+  entry: './src/js/app.js',
   output: {
     path: 'dst',
     publicPath: '/',  // Webpackのプラグインが利用するもの
