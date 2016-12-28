@@ -7,9 +7,9 @@ const rootResolve = pathname => resolve(__dirname, pathname);
 module.exports = {
   entry: './src/js/app.js',
   output: {
-    path: 'dst',
+    path: 'docs',
     publicPath: '/',  // Webpackのプラグインが利用するもの
-    filename: 'dst/js/[name].js'
+    filename: 'assets/js/[name].js'
   },
   externals: {
     //
@@ -28,7 +28,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: `${rootResolve('src/html/index.pug')}`,
     }),
-    new ExtractTextPlugin('dst/css/style.css')
+    new ExtractTextPlugin('assets/css/style.css')
   ],
   module: {
     noParse: /es6-promise\.js$/,
@@ -54,7 +54,7 @@ module.exports = {
     ]
   },
   devServer: {
-    contentBase: rootResolve('dst'),
+    contentBase: rootResolve('docs'),
     publicPath: '/'
   },
   babel: {
