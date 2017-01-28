@@ -6,11 +6,13 @@ body {
 }
 
 body p {
-  font-size: 16px;
+  font-size: 16px
 }
 
 input {
-  appearance: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
 }
 
 .editor-view {
@@ -106,4 +108,18 @@ input {
 
 .list-item:hover > div:nth-of-type(5) button {
   display: block;
+}
+
+@media screen and (max-width:640px){
+
+  body p{
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width:320px){
+
+  body p{
+    font-size: 10px;
+  }
 }
