@@ -1,3 +1,5 @@
+
+const path = require('path')
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin'); // cssを別ファイルで生成するため
@@ -7,7 +9,7 @@ const rootResolve = pathname => resolve(__dirname, pathname);
 module.exports = {
   entry: './src/js/app.js',
   output: {
-    path: 'docs',
+    path: path.resolve(__dirname, 'docs'),
     publicPath: '',  // Webpackのプラグインが利用するもの
     filename: 'assets/js/[name].js'
   },
@@ -18,7 +20,7 @@ module.exports = {
     alias: {
       vue$: 'vue/dist/vue.js',
     },
-    extensions: ['', '.js', '.scss', '.sass', '.vue'],
+    extensions: ['.js', '.scss', '.sass', '.vue'],
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -28,61 +30,43 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: `${rootResolve('src/html/index.pug')}`,
     }),
-    new ExtractTextPlugin('assets/css/style.css')
+    new ExtractTextPlugin({
+      filename: 'assets/css/style.css'
+    })
   ],
   module: {
     noParse: /es6-promise\.js$/,
-    loaders: [
+    rules: [
       {
         test: /\.pug$/,
         exclude: /node_modules/,
-        loader: 'pug'
+        loader: 'pug-loader'
       },
       {
         test: /\.vue$/,
-        loader: 'vue'
+        loader: 'vue-loader'
       },
       {
         test: /\.js$/,
         exclude: /node_modules|vue\/dist|vue-router\/|vue-loader\/|vue-hot-reload-api\//,
-        loader: 'babel'
+        loader: 'babel-loader'
       },
       {
         test: /\.(scss|sass)$/,
-        loader: ExtractTextPlugin.extract('style', 'css!postcss')
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: "style-loader",
+          loader: [
+            'css-loader',
+            'postcss-loader'
+          ]
+        })
       }
     ]
   },
   devServer: {
     contentBase: rootResolve('docs'),
-    publicPath: '/'
-  },
-  babel: {
-    presets: ['es2015'],
-    plugins: ['transform-runtime']
-  },
-  // vue: {
-  //   loaders: {
-  //     html: 'pug',
-  //     css: 'style!css!postcss',
-  //   }
-  // },
-  postcss: [
-    require('postcss-partial-import')(),
-    require('precss')(),
-    require('autoprefixer')(
-      {
-        browsers: [
-          'ie >= 11',
-          'ie_mob >= 11',
-          'ff >= 30',
-          'chrome >= 34',
-          'safari >= 8',
-          'opera >= 23',
-          'ios >= 8',
-          'android >= 4.4'
-        ]
-      }
-    )
-  ]
+    publicPath: '/',
+    hot: true,
+    host: '0.0.0.0'
+  }
 };
