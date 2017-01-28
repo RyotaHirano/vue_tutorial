@@ -11,7 +11,7 @@ Vue.component('list-view', {
         <list-item v-for="memo in memos" :memo="memo"></list-item>
       </div>
       <div v-else>
-        メモがありません。
+        <p>メモがありません。</p>
       </div>
     </div>
   `
